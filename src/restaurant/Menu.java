@@ -1,23 +1,40 @@
 package restaurant;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 public class Menu {
 
     private String menuUpdate;
-    private HashMap<MenuItem, Boolean> menu = new HashMap<MenuItem, Boolean>();
+    private ArrayList<MenuItem> menu = new ArrayList<>();
 
-    public Menu(HashMap<MenuItem, Boolean> menu) {
-        menu = this.menu;
+    public Menu(ArrayList<MenuItem> menu) {
+        this.menu = menu;
     }
 
-    public void addItemToMenu(MenuItem newItem, Boolean oldOrNew, String todayDate) {
-        menu.put(newItem, oldOrNew);
+    public void addItemToMenu(MenuItem newItem, String todayDate) {
+        boolean repeat = false;
+        for (int i = 0; i < menu.size(); i++) {
+            if (menu.get(i).equals(newItem)) {
+                repeat = true;
+            }
+        }
+        if (repeat) {
+            System.out.println(newItem.getName() + "is already on the menu!");
+        }
+        else {
+            menu.add(newItem);
+            setMenuUpdate(todayDate);
+        }
+    }
+
+    public void removeItemFromMenu(MenuItem item, String todayDate) {
+        menu.remove(item);
         setMenuUpdate(todayDate);
     }
 
-    public HashMap<MenuItem, Boolean> getMenu() {
+    public ArrayList<MenuItem> getMenu() {
         return menu;
     }
 
